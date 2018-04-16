@@ -1,0 +1,55 @@
+
+
+ul.topnav_left {
+    display: inline-block;
+    list-style-type: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+ul.topnav_right {
+    float: right;
+    list-style-type: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+ul li {
+    float: left;
+    margin-top: 0;
+}
+
+ul li a {
+    display: block;
+    color: rgb(16, 245, 233);
+    text-align: center;
+    padding: 14px 25px;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+ul li a:hover:not(.active) {background-color: rgb(23, 64, 245);}
+
+ul li a:hover {
+    color: rgb(16, 245, 233);
+}
+
+ul li a.active {background-color: aquamarine;}
+
+ul li.right {float: right;}
+
+@media screen and (max-width: 600px){
+    ul li.right, 
+    ul li {float: none;}
+    ul {
+        margin-left: 0;
+    }
+}
+
+#div_form input {
+    margin: 0 auto;
+}
