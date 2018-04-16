@@ -1,5 +1,5 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller" /// Define controller first
+    "sap/ui/core/mvc/Controller" /// Define controller
 ], function(Controller) {  /// Then implement it
     "use strice";  /// Use strict mode in the browser
 
