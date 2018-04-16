@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Walkthrough-Bootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Import openui5-->
+    <script 
+        src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
+        id="sap-ui-bootstrap"
+        data-sap-ui-theme="sap_belize"
+        data-sap-ui-libs="sap.m"
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-preload="async">
+    </script>
+
+    <script>
+        /*
+         * Check openui is ready
+         * And put the content in body
+        */
+        sap.ui.getCore().attachInit(function () {
+            alert("UI5 is ready");
+
+            /// Put the content
+            new sap.m.Text({
+                text : "Use sap.m.Text to put the content"
+            }).placeAt('content');
+
+        });
+    </script>
+
+</head>
+<body class="sapUiBody" id="content">
+
+</body>
+</html>
