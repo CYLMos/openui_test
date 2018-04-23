@@ -9,21 +9,30 @@ sap.ui.define([
      * .controller.Controller represents in the folder "controller/Controller"
      * .App respresents the controller name(.js file name)
     */
+
     return Controller.extend("sap.ui.demo.walkthrough.controller.App", {
         onInit : function(){
-            //var model = new JSONModel(jQuery.sap.getModulePath("sap.ui.demo.walkthrough", "/data.json"));
-            var data = {
-                "Data" : [
-                    {"number" : "0", "name" : "name 0", "explain" : "explain 0"},
-                    {"number" : "1", "name" : "name 1", "explain" : "explain 1"}
-                ]
-            };
+            var jsonData = window.sessionStorage.getItem("json");
+            if(jsonData == null || 
+                jsonData == undefined)
+            {
+                var data = {
+                    "Data" : [
+                        {"number" : "0", "name" : "name 0", "explain" : "explain 0"},
+                        {"number" : "1", "name" : "name 1", "explain" : "explain 1"}
+                    ]
+                };
+                var model = new JSONModel(data);
+                this.byId('table').setModel(model, 'model');
+    
+                window.sessionStorage.setItem("json", model.getJSON());
+            }
+            else{
+                var model = new JSONModel(JSON.parse(jsonData));
+                this.byId('table').setModel(model, 'model');
 
-            var model = new JSONModel(data);
-            //this.getView().setModel(model, 'model');
-            this.byId('table').setModel(model, 'model');
-
-            window.sessionStorage.setItem("json", model.getJSON());
+                alert(window.sessionStorage.getItem("json"));
+            }
         },
 
         selectionChange : function(oEvent){
@@ -60,7 +69,22 @@ sap.ui.define([
         },
 
         delete : function(){
-            alert('delete');
+            var jsonData = JSON.parse(window.sessionStorage.getItem("json"));
+            var selectData = JSON.parse(window.sessionStorage.getItem('passData'));
+
+            for(var i = 0; i < jsonData.Data.length; i++){
+                if(jsonData.Data[i].number == selectData.number &&
+                   jsonData.Data[i].name == selectData.name)
+                {
+                    delete jsonData.Data[i];
+                    break;
+                }
+            }
+
+            var model = new JSONModel(jsonData);
+            this.byId('table').setModel(model, 'model');
+
+            window.sessionStorage.setItem('json', JSON.stringify(jsonData));
         }
     });
 });
