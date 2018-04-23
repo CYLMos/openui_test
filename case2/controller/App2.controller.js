@@ -41,12 +41,12 @@ sap.ui.define([
 
             if(jsonStatus.status == 'modify'){
                 for(var i = 0; i < jsonData.Data.length; i++){
-                    if(jsonData.Data[i].number == saveData.number &&
-                        jsonData.Data[i].name == saveData.name)
-                     {
-                         delete jsonData.Data[i];
-                         break;
-                     }
+                    if(jsonData.Data[i].number == saveData.number){
+                        jsonData.Data[i].name = saveData.name;
+                        jsonData.Data[i].explain = saveData.explain;
+
+                        break;
+                    }
                 }
             }
             else if(jsonStatus.status == 'add'){
@@ -54,6 +54,9 @@ sap.ui.define([
             }
             
             window.sessionStorage.setItem("json", JSON.stringify(jsonData));
+            alert('Save success!');
+
+            window.location = "index.html";
         }
     });
 });

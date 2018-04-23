@@ -30,8 +30,6 @@ sap.ui.define([
             else{
                 var model = new JSONModel(JSON.parse(jsonData));
                 this.byId('table').setModel(model, 'model');
-
-                alert(window.sessionStorage.getItem("json"));
             }
         },
 
@@ -42,22 +40,31 @@ sap.ui.define([
         },
 
         research : function(){
-            window.sessionStorage.setItem('research', '1');
+            window.sessionStorage.setItem("passStatus", null);
+            window.sessionStorage.setItem("passData", null);
 
             var json = window.sessionStorage.getItem('json');
             var model = new JSONModel(JSON.parse(json));
 
-            alert(model.getJSON());
             this.byId('table').setModel(model, 'model');
-
-            window.sessionStorage.setItem('research', '0');
         },
-        modify : function(oEvent){
-            var data = {
-                "status" : "modify"
-            };
-            window.sessionStorage.setItem("passStatus", JSON.stringify(data));
-            window.location = "edit.html";
+
+        modify : function(){
+            if(window.sessionStorage.getItem('passData') == null ||
+               window.sessionStorage.getItem('passData') == undefined ||
+               window.sessionStorage.getItem('passData') == 'null')
+            {
+                alert('Choose a row data!');
+            }
+
+            else{
+                var data = {
+                    "status" : "modify"
+                };
+                
+                window.sessionStorage.setItem("passStatus", JSON.stringify(data));
+                window.location = "edit.html";
+            }
         },
 
         add : function(){
@@ -69,22 +76,45 @@ sap.ui.define([
         },
 
         delete : function(){
-            var jsonData = JSON.parse(window.sessionStorage.getItem("json"));
-            var selectData = JSON.parse(window.sessionStorage.getItem('passData'));
-
-            for(var i = 0; i < jsonData.Data.length; i++){
-                if(jsonData.Data[i].number == selectData.number &&
-                   jsonData.Data[i].name == selectData.name)
-                {
-                    delete jsonData.Data[i];
-                    break;
-                }
+            if(window.sessionStorage.getItem('passData') == null ||
+               window.sessionStorage.getItem('passData') == undefined ||
+               window.sessionStorage.getItem('passData') == 'null')
+            {
+                alert('Choose a row data!');
             }
+            else{
+                var jsonData = JSON.parse(window.sessionStorage.getItem("json"));
+                var selectData = JSON.parse(window.sessionStorage.getItem('passData'));
 
-            var model = new JSONModel(jsonData);
-            this.byId('table').setModel(model, 'model');
+                for(var i = 0; i < jsonData.Data.length; i++){
+                    if(jsonData.Data[i].number == selectData.number &&
+                       jsonData.Data[i].name == selectData.name)
+                    {
+                        delete jsonData.Data[i];
+                        break;
+                    }
+                }
 
-            window.sessionStorage.setItem('json', JSON.stringify(jsonData));
+                jsonData = replacer(jsonData);
+
+                var model = new JSONModel(jsonData);
+                this.byId('table').setModel(model, 'model');
+
+                window.sessionStorage.setItem('json', JSON.stringify(jsonData));
+            }
         }
     });
 });
+
+function replacer(jsonData){
+    var data = {
+        Data : []
+    }
+    for(var i = 0; i < jsonData.Data.length; i++){
+        if(jsonData.Data[i] != null || jsonData.Data[i] != undefined){
+            data.Data.push(jsonData.Data[i]);
+        }
+    }
+
+    return data;
+}

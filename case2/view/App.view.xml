@@ -10,7 +10,7 @@
 	xmlns:tnt="sap.tnt"
 	height="100%">
 	<tnt:ToolHeader>
-	    <Text text="ABC"/>
+	    <Text text="ABC Management"/>
 		<tnt:ToolHeaderUtilitySeparator />
 		<ToolbarSpacer>
 			<layoutData>
