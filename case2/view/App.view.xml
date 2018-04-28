@@ -8,6 +8,7 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m"
 	xmlns:tnt="sap.tnt"
+	xmlns:t="sap.ui.table"
 	height="100%">
 	<tnt:ToolHeader>
 	    <Text text="ABC Management"/>
@@ -40,42 +41,35 @@
 
 	</tnt:ToolHeader>
 
-	<Table
+	<t:Table
 	    id="table"
-		selectionChange="selectionChange"
-		mode="SingleSelectMaster"
-		inset="false"
-		items="{
-		    path : 'model>/Data',
-			sorter : {
-				path : 'number'
-			}
-		}">
+		rows="{model>/Data}"
+		selectionMod="None"
+		visibleRowCount="1">
 
-		<columns>
-			<Column
+		<t:columns>
+			<t:Column
 				width="12em">
 				<Text text="Number" />
-			</Column>
-			<Column
+				<t:template>
+					<Text text="{model>number}"/>
+				</t:template>
+			</t:Column>
+			<t:Column
 				minScreenWidth="Tablet"
 				demandPopin="true">
 				<Text text="Name" />
-			</Column>
-			<Column
+				<t:template>
+					<Text text="{model>name}"/>
+				</t:template>
+			</t:Column>
+			<t:Column
 				hAlign="End">
 				<Text text="Explain" />
-			</Column>
-		</columns>
-
-		<items>
-		    <ColumnListItem>
-			    <cells>
-				    <Text text="{model>number}"/>
-					<Text text="{model>name}"/>
+				<t:template>
 					<Text text="{model>explain}"/>
-				</cells>
-			</ColumnListItem>
-		</items>
-	</Table>
+				</t:template>
+			</t:Column>
+		</t:columns>
+	</t:Table>
 </mvc:View>

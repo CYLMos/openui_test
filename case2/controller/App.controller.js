@@ -23,7 +23,7 @@ sap.ui.define([
                     ]
                 };
                 var model = new JSONModel(data);
-                this.byId('table').setModel(model, 'model');
+                sap.ui.getCore().setModel(model, 'model');
     
                 window.sessionStorage.setItem("json", model.getJSON());
             }
