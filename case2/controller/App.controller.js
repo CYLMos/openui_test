@@ -14,7 +14,7 @@ sap.ui.define([
         onInit : function(){
             var jsonData = window.sessionStorage.getItem("json");
             if(jsonData == null || 
-                jsonData == undefined)
+               jsonData == undefined)
             {
                 var data = {
                     "Data" : [
@@ -33,12 +33,6 @@ sap.ui.define([
             }
         },
 
-        selectionChange : function(oEvent){
-            var items = oEvent.getParameter("listItem");
-            var model = items.getBindingContext('model').getObject();
-            window.sessionStorage.setItem('passData', JSON.stringify(model));
-        },
-
         research : function(){
             window.sessionStorage.setItem("passStatus", null);
             window.sessionStorage.setItem("passData", null);
@@ -50,20 +44,27 @@ sap.ui.define([
         },
 
         modify : function(){
-            if(window.sessionStorage.getItem('passData') == null ||
-               window.sessionStorage.getItem('passData') == undefined ||
-               window.sessionStorage.getItem('passData') == 'null')
-            {
+            if(this.byId('table').getSelectedIndex() == -1){
                 alert('Choose a row data!');
             }
-
             else{
+                var rowData = this.byId('table').getRows();
+                var index = this.byId('table').getSelectedIndex();
+                var selectRow = rowData[index];
+                var cellData = selectRow.getCells();
+
                 var data = {
                     "status" : "modify"
                 };
+                var passData = {
+                    "number" : cellData[0].getText(),
+                    "name" : cellData[1].getText(),
+                    "explain" : cellData[2].getText(),
+                }
                 
                 window.sessionStorage.setItem("passStatus", JSON.stringify(data));
-                window.location = "edit.html";
+                window.sessionStorage.setItem("passData", JSON.stringify(passData));
+                window.location = "edit2.html";
             }
         },
 
@@ -72,29 +73,22 @@ sap.ui.define([
                 "status" : "add"
             };
             window.sessionStorage.setItem("passStatus", JSON.stringify(data));
-            window.location = "edit.html";
+            window.location = "edit2.html";
         },
 
         delete : function(){
-            if(window.sessionStorage.getItem('passData') == null ||
-               window.sessionStorage.getItem('passData') == undefined ||
-               window.sessionStorage.getItem('passData') == 'null')
-            {
+            if(this.byId('table').getSelectedIndex() == -1){
                 alert('Choose a row data!');
             }
             else{
                 var jsonData = JSON.parse(window.sessionStorage.getItem("json"));
-                var selectData = JSON.parse(window.sessionStorage.getItem('passData'));
+                //var selectData = JSON.parse(window.sessionStorage.getItem('passData'));
+                var rowData = this.byId('table').getRows();
+                var selectData = rowData[this.byId('table').getSelectedIndex()];
 
-                for(var i = 0; i < jsonData.Data.length; i++){
-                    if(jsonData.Data[i].number == selectData.number &&
-                       jsonData.Data[i].name == selectData.name)
-                    {
-                        delete jsonData.Data[i];
-                        break;
-                    }
-                }
+                this.byId('table').removeRow(selectData);
 
+                jsonData.Data[this.byId('table').getSelectedIndex()] = null;
                 jsonData = replacer(jsonData);
 
                 var model = new JSONModel(jsonData);

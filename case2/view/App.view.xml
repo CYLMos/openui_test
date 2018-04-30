@@ -45,7 +45,7 @@
 	    id="table"
 		rows="{model>/Data}"
 		selectionMod="None"
-		visibleRowCount="1">
+		visibleRowCount="8">
 
 		<t:columns>
 			<t:Column
