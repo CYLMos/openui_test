@@ -1,0 +1,53 @@
+<!--
+    controllerName is used to define the location of the .js file
+	This .js file can control the behavior of the UIs we defined
+	In this example, onShowHello is the function in the .js file
+-->
+<mvc:View
+	controllerName="sap.ui.demo.walkthrough.controller.App2"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+	xmlns:tnt="sap.tnt"
+	height="100%">
+	<tnt:ToolHeader>
+        <Button id="back" text="Back" type="Transparent" press="back">
+			<layoutData>
+				<OverflowToolbarLayoutData priority="Low"/>
+			</layoutData>
+		</Button>
+	    <Text text="ABC Edit"/>
+	</tnt:ToolHeader>
+
+        <l:VerticalLayout
+	    class="sapUiContentPadding"
+		width="100%">
+	<l:content>
+        <Label text="編號" labelFor="input_number"/>
+	    <Input
+	        id="input_number"
+		    value="{/number}"
+		    valueLiveUpdate="true"
+		    width="60%"/>
+        <Label text="名稱" labelFor="input_name"/>
+        <Input
+	        id="input_name"
+		    value="{/name}"
+		    valueLiveUpdate="true"
+		    width="60%"/>
+	    <Label text="說明" labelFor="ta_explain"/>
+	    <TextArea
+	        id="ta_explain"
+		    value="{/explain}"
+		    rows="8"
+			cols="60"/>
+	    <Button
+	        text="Save"
+		    press="save"/>
+
+	</l:content>
+	
+	</l:VerticalLayout>
+
+
+</mvc:View>

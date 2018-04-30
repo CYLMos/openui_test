@@ -1,0 +1,81 @@
+<!--
+    controllerName is used to define the location of the .js file
+	This .js file can control the behavior of the UIs we defined
+	In this example, onShowHello is the function in the .js file
+-->
+<mvc:View
+	controllerName="sap.ui.demo.walkthrough.controller.App"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:tnt="sap.tnt"
+	height="100%">
+	<tnt:ToolHeader>
+	    <Text text="ABC Management"/>
+		<tnt:ToolHeaderUtilitySeparator />
+		<ToolbarSpacer>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px" />
+			</layoutData>
+		</ToolbarSpacer>
+		<Button id="research" text="重新查詢" type="Transparent" press="research">
+			<layoutData>
+				<OverflowToolbarLayoutData priority="Low"/>
+			</layoutData>
+		</Button>
+		<Button id="add" text="新增" type="Transparent" press="add">
+			<layoutData>
+				<OverflowToolbarLayoutData priority="Low"/>
+			</layoutData>
+		</Button>
+		<Button id="modify" text="修改" type="Transparent" press="modify">
+		    <layoutData>
+			    <OverflowToolbarLayoutData priority="Low"/>
+			</layoutData>
+		</Button>
+		<Button id="delete" text="刪除" type="Transparent" press="delete">
+			<layoutData>
+				<OverflowToolbarLayoutData priority="Low"/>
+			</layoutData>
+		</Button>
+
+	</tnt:ToolHeader>
+
+	<Table
+	    id="table"
+		selectionChange="selectionChange"
+		mode="SingleSelectMaster"
+		inset="false"
+		items="{
+		    path : 'model>/Data',
+			sorter : {
+				path : 'number'
+			}
+		}">
+
+		<columns>
+			<Column
+				width="12em">
+				<Text text="Number" />
+			</Column>
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true">
+				<Text text="Name" />
+			</Column>
+			<Column
+				hAlign="End">
+				<Text text="Explain" />
+			</Column>
+		</columns>
+
+		<items>
+		    <ColumnListItem>
+			    <cells>
+				    <Text text="{model>number}"/>
+					<Text text="{model>name}"/>
+					<Text text="{model>explain}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</mvc:View>
