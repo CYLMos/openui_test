@@ -1,3 +1,7 @@
+/*
+ * For index.html
+ */
+
 sap.ui.define([
     "jquery.sap.global", /// Define jquery sap
     "sap/ui/core/mvc/Controller", /// Define controller
@@ -13,9 +17,15 @@ sap.ui.define([
     return Controller.extend("sap.ui.demo.walkthrough.controller.App", {
         onInit : function(){
             var jsonData = window.sessionStorage.getItem("json");
+
+            /*
+             * If session don't have data, create initial data
+             * else will put session data in model
+             */
             if(jsonData == null || 
                 jsonData == undefined)
             {
+                /// Init data
                 var data = {
                     "Data" : [
                         {"number" : "0", "name" : "name 0", "explain" : "explain 0"},
@@ -25,6 +35,7 @@ sap.ui.define([
                 var model = new JSONModel(data);
                 this.byId('table').setModel(model, 'model');
     
+                /// Store the data in session
                 window.sessionStorage.setItem("json", model.getJSON());
             }
             else{
@@ -33,13 +44,16 @@ sap.ui.define([
             }
         },
 
+        /// If selected row changes, put new row in session
         selectionChange : function(oEvent){
             var items = oEvent.getParameter("listItem");
             var model = items.getBindingContext('model').getObject();
             window.sessionStorage.setItem('passData', JSON.stringify(model));
         },
 
+        /// For research
         research : function(){
+            /// clear status and pass data in session
             window.sessionStorage.setItem("passStatus", null);
             window.sessionStorage.setItem("passData", null);
 
@@ -49,7 +63,9 @@ sap.ui.define([
             this.byId('table').setModel(model, 'model');
         },
 
+        /// For modify
         modify : function(){
+            /// If pass data in session don't have data, tell user choose a row
             if(window.sessionStorage.getItem('passData') == null ||
                window.sessionStorage.getItem('passData') == undefined ||
                window.sessionStorage.getItem('passData') == 'null')
@@ -57,6 +73,7 @@ sap.ui.define([
                 alert('Choose a row data!');
             }
 
+            /// If have data, store status data in session and direct to edit.html
             else{
                 var data = {
                     "status" : "modify"
@@ -67,7 +84,9 @@ sap.ui.define([
             }
         },
 
+        /// For add row data
         add : function(){
+            /// store status data in session and direct to edit.html
             var data = {
                 "status" : "add"
             };
@@ -75,13 +94,16 @@ sap.ui.define([
             window.location = "edit.html";
         },
 
+        /// For delete a row
         delete : function(){
+            /// If pass data in session don't have data, tell user choose a row 
             if(window.sessionStorage.getItem('passData') == null ||
                window.sessionStorage.getItem('passData') == undefined ||
                window.sessionStorage.getItem('passData') == 'null')
             {
                 alert('Choose a row data!');
             }
+            /// Remove select data from json in session
             else{
                 var jsonData = JSON.parse(window.sessionStorage.getItem("json"));
                 var selectData = JSON.parse(window.sessionStorage.getItem('passData'));
@@ -95,6 +117,7 @@ sap.ui.define([
                     }
                 }
 
+                /// Clear the null item
                 jsonData = replacer(jsonData);
 
                 var model = new JSONModel(jsonData);
@@ -106,6 +129,7 @@ sap.ui.define([
     });
 });
 
+/// Clear null item in json
 function replacer(jsonData){
     var data = {
         Data : []

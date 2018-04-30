@@ -1,3 +1,7 @@
+/*
+ * For index2.html
+ */
+
 sap.ui.define([
     "jquery.sap.global", /// Define jquery sap
     "sap/ui/core/mvc/Controller", /// Define controller
@@ -16,6 +20,7 @@ sap.ui.define([
             if(jsonData == null || 
                jsonData == undefined)
             {
+                /// init data
                 var data = {
                     "Data" : [
                         {"number" : "0", "name" : "name 0", "explain" : "explain 0"},
@@ -33,7 +38,9 @@ sap.ui.define([
             }
         },
 
+        /// For research
         research : function(){
+            /// clear status and pass data in session
             window.sessionStorage.setItem("passStatus", null);
             window.sessionStorage.setItem("passData", null);
 
@@ -43,10 +50,17 @@ sap.ui.define([
             this.byId('table').setModel(model, 'model');
         },
 
+        /// For modify
         modify : function(){
+            /// If user didn't choose a row, tell user choose a row
             if(this.byId('table').getSelectedIndex() == -1){
                 alert('Choose a row data!');
             }
+            /// If more than a row, rell user choose a row
+            else if(this.byId('table').getSelectedIndices().length > 1){
+                alert('Please choose a row!');
+            }
+            /// store status data and pass data in session and direct to edit2.html
             else{
                 var rowData = this.byId('table').getRows();
                 var index = this.byId('table').getSelectedIndex();
@@ -68,7 +82,9 @@ sap.ui.define([
             }
         },
 
+        /// For add row data
         add : function(){
+            /// store status data in session and direct to edit2.html
             var data = {
                 "status" : "add"
             };
@@ -76,19 +92,22 @@ sap.ui.define([
             window.location = "edit2.html";
         },
 
+        /// For delete rows
         delete : function(){
+            /// If user didn't choose rows, tell user choose at least a row
             if(this.byId('table').getSelectedIndex() == -1){
                 alert('Choose a row data!');
             }
+            /// Remove select data from json in session
             else{
                 var jsonData = JSON.parse(window.sessionStorage.getItem("json"));
-                //var selectData = JSON.parse(window.sessionStorage.getItem('passData'));
-                var rowData = this.byId('table').getRows();
-                var selectData = rowData[this.byId('table').getSelectedIndex()];
 
-                this.byId('table').removeRow(selectData);
+                for(var i = 0; i < this.byId('table').getSelectedIndices().length; i++){
 
-                jsonData.Data[this.byId('table').getSelectedIndex()] = null;
+                    jsonData.Data[this.byId('table').getSelectedIndices()[i]] = null;
+                }
+
+                /// Clear the null item
                 jsonData = replacer(jsonData);
 
                 var model = new JSONModel(jsonData);
@@ -100,6 +119,7 @@ sap.ui.define([
     });
 });
 
+/// Clear null item in json
 function replacer(jsonData){
     var data = {
         Data : []

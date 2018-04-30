@@ -1,3 +1,7 @@
+/*
+ * For edit.html
+ */
+
 sap.ui.define([
     "sap/ui/core/mvc/Controller", /// Define controller
     "sap/ui/model/json/JSONModel"
@@ -10,10 +14,12 @@ sap.ui.define([
     */
     return Controller.extend("sap.ui.demo.walkthrough.controller.App2", {
         onInit : function(){
+            /// Get status and pass data in session
             var jsonStatus = JSON.parse(window.sessionStorage.getItem("passStatus"));
             var jsonData = JSON.parse(window.sessionStorage.getItem("passData"));
 
             if(jsonStatus.status == 'modify'){
+                /// Make the input of number can't modify
                 this.byId('input_number').setEditable(false);
 
                 var model = new JSONModel(jsonData);
@@ -21,13 +27,17 @@ sap.ui.define([
             }
         },
 
+        /// For back button
         back : function(){
+            /// Rest status and pass data to null in session
             window.sessionStorage.setItem("passStatus", null);
             window.sessionStorage.setItem("passData", null);
             window.location = "index.html";
         },
 
+        /// For save button
         save : function(){
+            /// Reset pass data to null in session
             window.sessionStorage.setItem("passData", null);
 
             var jsonStatus = JSON.parse(window.sessionStorage.getItem("passStatus"));
@@ -39,6 +49,7 @@ sap.ui.define([
                 "explain" : this.byId('ta_explain').getValue()
             }
 
+            /// If is modify mode, change the data user wanted to change
             if(jsonStatus.status == 'modify'){
                 for(var i = 0; i < jsonData.Data.length; i++){
                     if(jsonData.Data[i].number == saveData.number){
@@ -49,6 +60,7 @@ sap.ui.define([
                     }
                 }
             }
+            /// If is add mode, Add data in json
             else if(jsonStatus.status == 'add'){
                 jsonData.Data[jsonData.Data.length] = saveData;
             }
