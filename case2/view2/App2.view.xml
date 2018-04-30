@@ -4,7 +4,7 @@
 	In this example, onShowHello is the function in the .js file
 -->
 <mvc:View
-	controllerName="sap.ui.demo.walkthrough.controller.App2"
+	controllerName="sap.ui.demo.walkthrough.controller2.App2"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m"
     xmlns:l="sap.ui.layout"

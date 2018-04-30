@@ -5,10 +5,10 @@ sap.ui.define([
     "use strice";  /// Use strict mode in the browser
 
     /* "sap.ui.demo.walkthrough" is the root name
-     * .controller.Controller represents in the folder "controller/Controller"
+     * .controller2.Controller represents in the folder "controller2/Controller"
      * .App respresents the controller name(.js file name)
     */
-    return Controller.extend("sap.ui.demo.walkthrough.controller.App2", {
+    return Controller.extend("sap.ui.demo.walkthrough.controller2.App2", {
         onInit : function(){
             var jsonStatus = JSON.parse(window.sessionStorage.getItem("passStatus"));
             var jsonData = JSON.parse(window.sessionStorage.getItem("passData"));
@@ -56,7 +56,7 @@ sap.ui.define([
             window.sessionStorage.setItem("json", JSON.stringify(jsonData));
             alert('Save success!');
 
-            window.location = "index.html";
+            window.location = "index2.html";
         }
     });
 });
